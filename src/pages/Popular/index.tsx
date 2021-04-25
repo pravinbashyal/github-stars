@@ -7,6 +7,7 @@ const { Title } = Typography
 export const PopularRepo = () => {
   const { isFetching, data, error } = usePopularRepoApi({
     page: 0,
+    perPage: 10,
   })
   return (
     <section>
