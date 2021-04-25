@@ -5,17 +5,18 @@ import { SearchParams, SortBy, SortOrder } from '../domain/Infra/SearchParams'
 import { toApiSearchParams } from '../domain/Infra/SearchParamsMappers'
 
 export const usePopularRepoApi = ({ page }: Partial<SearchParams>): RequestStates<Repository[]> => {
-  const defaultParams = {
-    page: 0,
-    perPage: 50,
-    sortOrder: SortOrder.Descending,
-    sortBy: SortBy.Stars,
-  }
   const [isFetching, setIsFetching] = useState(false)
   const [popularRepo, setPopularRepo] = useState<Repository[]>([])
   const [error, setError] = useState()
   useEffect(() => {
     setIsFetching(true)
+
+    const defaultParams = {
+      page: 0,
+      perPage: 50,
+      sortOrder: SortOrder.Descending,
+      sortBy: SortBy.Stars,
+    }
     const urlSearchParams = new URLSearchParams(
       toApiSearchParams({
         ...defaultParams,

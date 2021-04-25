@@ -2,7 +2,7 @@ import React from 'react'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import { Switch, Route } from 'react-router-dom'
-import { PopularRepo } from '../pages/Popular'
+import { PopularRepo } from '../pages/PopularRepo'
 import { Favorites } from '../pages/Favorites'
 
 export const Main = () => (

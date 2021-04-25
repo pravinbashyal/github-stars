@@ -9,15 +9,15 @@ export type Repository = {
   private: boolean
   owner: Owner
   description: string
-  html_url: string
-  homepage: string
-  size: string
+  html_url?: string
+  homepage?: string
+  size?: string
   stargazers_count: number
   watchers_count: number
   language: Language
-  license: License
+  license?: License
   forks: number
-  open_issues: number
-  watchers: number
+  open_issues?: number
+  watchers?: number
   default_branch: string
 }
