@@ -13,7 +13,6 @@ export const PopularRepo = () => {
     page: 0,
     perPage: 10,
   })
-  console.log({ repositories, isFetching, error })
   return (
     <section aria-labelledby={sectionId}>
       <Title level={2} id={sectionId}>
@@ -44,6 +43,7 @@ export const RepositoryListItem: FC<RepositoryListItemProps> = ({
         <IconText icon={StarOutlined} text={stargazers_count} key="star" />,
         <IconText icon={LikeOutlined} text={watchers_count} key="watchers" />,
       ]}
+      extra={<img width={272} alt="user avatar" src={owner.avatar_url} />}
     >
       <List.Item.Meta title={name} description={description}></List.Item.Meta>
       {description}

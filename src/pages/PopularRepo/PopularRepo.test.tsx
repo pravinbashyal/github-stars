@@ -23,7 +23,7 @@ describe('Popular', () => {
     }))
   })
 
-  test.only('renders popular', () => {
+  test('renders popular', () => {
     setup()
     expect(screen.getByRole('heading', { name: 'Popular Repositories' })).toBeInTheDocument()
   })
