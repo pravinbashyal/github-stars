@@ -1,8 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { List, Space, Typography } from 'antd'
 import { usePopularRepoApi } from '../../infra/useApi'
-import { Repository } from '../../domain/Github/Repository'
-import { LikeOutlined, StarOutlined } from '@ant-design/icons'
+import { RepositoryListItem } from './RepositoryListItem'
 
 const { Title } = Typography
 
@@ -30,28 +29,7 @@ export const PopularRepo = () => {
   )
 }
 
-type RepositoryListItemProps = {
-  repository: Repository
-}
-
-export const RepositoryListItem: FC<RepositoryListItemProps> = ({
-  repository: { name, description, stargazers_count, watchers_count, owner },
-}) => {
-  return (
-    <List.Item
-      actions={[
-        <IconText icon={StarOutlined} text={stargazers_count} key="star" />,
-        <IconText icon={LikeOutlined} text={watchers_count} key="watchers" />,
-      ]}
-      extra={<img width={272} alt="user avatar" src={owner.avatar_url} />}
-    >
-      <List.Item.Meta title={name} description={description}></List.Item.Meta>
-      {description}
-    </List.Item>
-  )
-}
-
-const IconText = ({ icon, text }: { icon: any; text: string | number }) => (
+export const IconText = ({ icon, text }: { icon: any; text: string | number }) => (
   <Space>
     {React.createElement(icon)}
     {text}

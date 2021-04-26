@@ -1,10 +1,11 @@
-import '../../testMock/matchMedia.mock'
+import '../../testSetup/mock/matchMedia.mock'
 import { usePopularRepoApi } from '../../infra/useApi'
 
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { PopularRepo } from '.'
 import { repositoryFactory } from '../../domain/Github/__fixtures__/repositoryFactory'
+import { Wrapper } from '../../testSetup/wrapper'
 
 jest.mock('../../infra/useApi')
 
@@ -12,7 +13,9 @@ const repositories = repositoryFactory.buildList(3)
 
 const setup = (props = {}) => {
   const defaultProps = {}
-  render(<PopularRepo {...defaultProps} {...props}></PopularRepo>)
+  render(<PopularRepo {...defaultProps} {...props}></PopularRepo>, {
+    wrapper: Wrapper,
+  })
 }
 
 describe('Popular', () => {
