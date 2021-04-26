@@ -1,15 +1,38 @@
+import '../../testMock/matchMedia.mock'
+import { usePopularRepoApi } from '../../infra/useApi'
+
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { PopularRepo } from '.'
+import { repositoryFactory } from '../../domain/Github/__fixtures__/repositoryFactory'
 
-const setup = (props: {}) => {
+jest.mock('../../infra/useApi')
+
+const repositories = repositoryFactory.buildList(3)
+
+const setup = (props = {}) => {
   const defaultProps = {}
   render(<PopularRepo {...defaultProps} {...props}></PopularRepo>)
 }
 
 describe('Popular', () => {
-  test('renders popular', () => {
+  beforeEach(() => {
+    usePopularRepoApi.mockImplementation(() => ({
+      isFetching: false,
+      data: repositories,
+    }))
+  })
+
+  test.only('renders popular', () => {
     setup()
     expect(screen.getByRole('heading', { name: 'Popular Repositories' })).toBeInTheDocument()
+  })
+
+  test('lists popular repositories', () => {
+    setup()
+    repositories.forEach(({ name }) => {
+      const repositoryName = screen.getByRole('heading', { name })
+      expect(repositoryName).toBeInTheDocument()
+    })
   })
 })
