@@ -6,7 +6,7 @@ import { Repository } from '../Repository'
 
 export const repositoryFactory = Factory.define<Repository>(({ sequence }) => ({
   id: `repo-${sequence}`,
-  name: `Popular Guy-${sequence}`,
+  name: `Popular Repo-${sequence}`,
   full_name: `popular_guy-${sequence}`,
   private: false,
   owner: {
