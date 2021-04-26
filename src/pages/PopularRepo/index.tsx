@@ -24,6 +24,15 @@ export const PopularRepo = () => {
         renderItem={(repository) => (
           <RepositoryListItem repository={repository} key={repository.id}></RepositoryListItem>
         )}
+        loading={isFetching}
+        bordered
+        style={{
+          minHeight: '600px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       ></List>
     </section>
   )

@@ -9,7 +9,7 @@ export type RepositoryListItemProps = {
   repository: Repository
 }
 
-const TitleLink = ({ to, label }) => <Link to="/">{label}</Link>
+const TitleLink = ({ to, label }: { to: string; label: string }) => <Link to="/">{label}</Link>
 
 export const RepositoryListItem: FC<RepositoryListItemProps> = ({
   repository: { name, description, stargazers_count, watchers_count, owner },
