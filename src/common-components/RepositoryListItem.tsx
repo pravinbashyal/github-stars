@@ -3,7 +3,7 @@ import { List } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
 import { Repository } from '../common-domain/Github/Repository'
 import { IconText } from './IconText'
-import { Star } from '../pages/PopularRepo/views/Star'
+import { StarButton } from '../pages/PopularRepo/views/StarButton'
 
 export type RepositoryListItemProps = {
   repository: Repository
@@ -22,12 +22,13 @@ export const RepositoryListItem: FC<RepositoryListItemProps> = ({
   return (
     <List.Item
       actions={[
-        <Star
+        <StarButton
           onClick={() => toggleFavorites(repository)}
           isSelected={isFavorite}
           count={stargazers_count}
           key="star"
-        ></Star>,
+          label={`star ${repository.name}`}
+        ></StarButton>,
         <IconText text={watchers_count} key="watchers" renderIcon={() => <EyeOutlined />} />,
       ]}
       extra={<img width={272} alt="user avatar" src={owner.avatar_url} />}
