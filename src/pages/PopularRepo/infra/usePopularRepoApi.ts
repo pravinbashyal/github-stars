@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { Repository } from '../../../domain/Github/Repository'
 import { RequestStates } from '../../../domain/Infra/Api'
@@ -25,8 +26,10 @@ export const usePopularRepoApi = ({ page }: Partial<SearchParams>): RequestState
     )
     const fetchPopularRepo = async () => {
       try {
+        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+        const formattedDate = format(sevenDaysAgo, 'yyyy-mm-dd')
         const popularRepoRes = await fetch(
-          `https://api.github.com/search/repositories?q=created:>2021-03-25&${urlSearchParams}`
+          `https://api.github.com/search/repositories?q=created:>=${formattedDate}&${urlSearchParams}`
         )
         const popularRepo = await popularRepoRes.json()
         setPopularRepo(popularRepo.items)
