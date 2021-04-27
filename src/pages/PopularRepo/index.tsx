@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { List, Space, Typography } from 'antd'
-import { usePopularRepoApi } from '../../infra/useApi'
-import { RepositoryListItem } from './RepositoryListItem'
+import { usePopularRepoApi } from './infra/usePopularRepoApi'
+import { RepositoryListItem } from './views/RepositoryListItem'
+import { useAddErrorAlert } from '../../common-components/Alert/state/useAlert'
 
 const { Title } = Typography
 
@@ -12,6 +13,8 @@ export const PopularRepo = () => {
     page: 0,
     perPage: 10,
   })
+  useAddErrorAlert(error)
+
   return (
     <section aria-labelledby={sectionId}>
       <Title level={2} id={sectionId}>

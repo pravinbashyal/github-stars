@@ -1,5 +1,5 @@
 import '../../testSetup/mock/matchMedia.mock'
-import { usePopularRepoApi } from '../../infra/useApi'
+import { usePopularRepoApi } from './infra/usePopularRepoApi'
 
 import { render, screen } from '@testing-library/react'
 import React from 'react'
