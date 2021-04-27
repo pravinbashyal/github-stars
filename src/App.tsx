@@ -3,13 +3,16 @@ import 'antd/dist/antd.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { AppLayout } from './AppLayout'
 import { AlertProvider } from './common-components/Alert/state/useAlert'
+import { FavoritesDbProvider } from './common-infra/useFavoritesDb'
 
 function App() {
   return (
     <div className="App">
       <Router>
         <AlertProvider>
-          <AppLayout></AppLayout>
+          <FavoritesDbProvider>
+            <AppLayout></AppLayout>
+          </FavoritesDbProvider>
         </AlertProvider>
       </Router>
     </div>
