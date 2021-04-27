@@ -7,7 +7,7 @@ import { PopularRepo } from '.'
 import { repositoryFactory } from '../../common-domain/Github/__fixtures__/repositoryFactory'
 import { Wrapper } from '../../testSetup/wrapper'
 
-jest.mock('../../infra/useApi')
+jest.mock('./infra/usePopularRepoApi')
 
 const repositories = repositoryFactory.buildList(3)
 
@@ -18,7 +18,7 @@ const setup = (props = {}) => {
   })
 }
 
-describe('Popular', () => {
+describe('<PopularRepo/>', () => {
   beforeEach(() => {
     usePopularRepoApi.mockImplementation(() => ({
       isFetching: false,
@@ -40,6 +40,7 @@ describe('Popular', () => {
   })
 
   test('shows loader while fetching', () => {
+    // @ts-ignore
     usePopularRepoApi.mockImplementation(() => ({
       isFetching: true,
       data: undefined,
@@ -50,6 +51,7 @@ describe('Popular', () => {
   })
 
   test('doesnt show loader while not fetching', () => {
+    // @ts-ignore
     usePopularRepoApi.mockImplementation(() => ({
       isFetching: false,
       data: [],
@@ -58,4 +60,6 @@ describe('Popular', () => {
     const spinner = container.querySelector('i.ant-spin-dot-item')
     expect(spinner).not.toBeInTheDocument()
   })
+
+  test('adds repo to favorites on click', () => {})
 })
