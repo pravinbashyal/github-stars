@@ -1,13 +1,15 @@
-import '../../testSetup/mock/matchMedia.mock'
 import { usePopularRepoApi } from './infra/usePopularRepoApi'
 
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { PopularRepo } from '.'
 import { repositoryFactory } from '../../common-domain/Github/__fixtures__/repositoryFactory'
 import { Wrapper } from '../../testSetup/wrapper'
+import { useFavoritesApi } from '../Favorites/infra/useFavoritesApi'
 
 jest.mock('./infra/usePopularRepoApi')
+jest.mock('../Favorites/infra/useFavoritesApi')
 
 const repositories = repositoryFactory.buildList(3)
 
@@ -23,6 +25,11 @@ describe('<PopularRepo/>', () => {
     usePopularRepoApi.mockImplementation(() => ({
       isFetching: false,
       data: repositories,
+    }))
+
+    useFavoritesApi.mockImplementation(() => ({
+      isFavorite: jest.fn(),
+      toggleFavorites: jest.fn(),
     }))
   })
 
@@ -61,5 +68,39 @@ describe('<PopularRepo/>', () => {
     expect(spinner).not.toBeInTheDocument()
   })
 
-  test('adds repo to favorites on click', () => {})
+  test('lists fetched repositories', () => {
+    const repositories = repositoryFactory.buildList(3)
+    usePopularRepoApi.mockImplementation(() => ({
+      isFetching: false,
+      data: repositories,
+    }))
+    setup()
+    repositories.forEach((repository) => {
+      const repositoryTitle = screen.getByRole('heading', { name: repository.name })
+      expect(repositoryTitle).toBeInTheDocument()
+    })
+  })
+
+  test('calls toggleFavorites star click', () => {
+    const repository = repositoryFactory.build()
+    const toggleFavorites = jest.fn()
+    // @ts-ignore
+    usePopularRepoApi.mockImplementation(() => ({
+      isFetching: false,
+      data: [repository],
+    }))
+    useFavoritesApi.mockImplementation(() => ({
+      isFavorite: jest.fn(() => false),
+      toggleFavorites,
+    }))
+    setup()
+
+    const starButton = screen.getByRole('button', {
+      name: `star ${repository.name}`,
+    })
+
+    userEvent.click(starButton)
+
+    expect(toggleFavorites).toHaveBeenCalledWith(repository)
+  })
 })
