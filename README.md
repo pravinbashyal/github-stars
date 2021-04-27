@@ -1,7 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -29,18 +25,22 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## Organisation:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The application is divided into Pages. Pages are root level routes. In this case:
+1. Popular
+2. Favorites
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Each logical component might be separated into following:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Domain:
+Domain consists of schemas and models that could be business domains(like in this case Repository) or application domain(like in this case SearchParams). Domain can consist of mappers. Mappers convert one domain object to another. Usually translations reside in this folder as well.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Infra:
+This is where the infrastructure like api services reside
 
-## Learn More
+### View:
+View consists of components. But when component is big and has business logic associated with it, it can be grouped into another sub folders of domain, state, view and app.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### State:
+State is where the component state lies. This is where application state and context providers reside
