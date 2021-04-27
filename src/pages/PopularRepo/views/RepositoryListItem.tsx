@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { List } from 'antd'
-import { EyeOutlined, StarOutlined } from '@ant-design/icons'
-import { IconText } from '../index'
-import { Repository } from '../../../domain/Github/Repository'
+import { EyeOutlined } from '@ant-design/icons'
+import { IconText } from '../../../common-components/IconText'
+import { Repository } from '../../../common-domain/Github/Repository'
+import { Star } from './Star'
 
 export type RepositoryListItemProps = {
   repository: Repository
@@ -12,12 +13,11 @@ const TitleLink = ({ to, label }: { to: string; label: string }) => <a href={to}
 
 export const RepositoryListItem: FC<RepositoryListItemProps> = ({ repository }) => {
   const { name, description, stargazers_count, watchers_count, owner, html_url = '' } = repository
-  console.log({ html_url })
   return (
     <List.Item
       actions={[
-        <IconText icon={StarOutlined} text={stargazers_count} key="star" />,
-        <IconText icon={EyeOutlined} text={watchers_count} key="watchers" />,
+        <Star onClick={console.log} isSelected={false} count={stargazers_count} key="star"></Star>,
+        <IconText text={watchers_count} key="watchers" renderIcon={() => <EyeOutlined />} />,
       ]}
       extra={<img width={272} alt="user avatar" src={owner.avatar_url} />}
     >

@@ -4,7 +4,7 @@ import { usePopularRepoApi } from './infra/usePopularRepoApi'
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { PopularRepo } from '.'
-import { repositoryFactory } from '../../domain/Github/__fixtures__/repositoryFactory'
+import { repositoryFactory } from '../../common-domain/Github/__fixtures__/repositoryFactory'
 import { Wrapper } from '../../testSetup/wrapper'
 
 jest.mock('../../infra/useApi')
