@@ -4,16 +4,19 @@ import { FavoritesDb } from '../common-domain/FavoritesDb'
 import { Repository } from '../common-domain/Github/Repository'
 import { useLocalStorage } from './useLocalStorage'
 
-const FavoritesDbContext = createContext<{
-  favorites: FavoritesDb
-  setFavorites: (favorites: FavoritesDb) => {}
-}>(undefined)
+const FavoritesDbContext = createContext<
+  | {
+      favorites: FavoritesDb
+      setFavorites: (favorites: FavoritesDb) => {}
+    }
+  | undefined
+>(undefined)
 
 export const FavoritesDbProvider = ({ children }) => {
   const initialValueFromStorageSerialized = localStorage.getItem('favorites')
   const initialValue = initialValueFromStorageSerialized
     ? JSON.parse(initialValueFromStorageSerialized)
-    : undefined
+    : {}
   const [favorites, setFavorites] = useLocalStorage('favorites', initialValue)
   return (
     <FavoritesDbContext.Provider value={{ favorites, setFavorites }}>
@@ -31,16 +34,14 @@ export const useFavoritesDb = () => {
   const get = (repoId: string) => {
     const repository = favoritesDb.favorites[repoId]
     if (!repository) {
-      return new Error('cannot find repository in db')
+      return null
     }
     return repository
   }
 
-  const getAll = () => {
-    values(favoritesDb.favorites)
-  }
+  const getAll = () => values(favoritesDb.favorites).filter(Boolean)
 
-  const deleteRepo = (id: string) => {
+  const deleteValue = (id: string) => {
     favoritesDb.setFavorites({ ...favoritesDb.favorites, [id]: undefined })
   }
 
@@ -48,5 +49,5 @@ export const useFavoritesDb = () => {
     favoritesDb.setFavorites({ ...favoritesDb.favorites, [repo.id]: repo })
   }
 
-  return { get, getAll, deleteRepo, add }
+  return { get, getAll, deleteValue, add }
 }
