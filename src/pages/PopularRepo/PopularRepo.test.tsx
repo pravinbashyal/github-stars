@@ -7,15 +7,15 @@ import { PopularRepo } from '.'
 import { repositoryFactory } from '../../common-domain/Github/__fixtures__/repositoryFactory'
 import { Wrapper } from '../../testSetup/wrapper'
 import { useFavoritesApi } from '../Favorites/infra/useFavoritesApi'
+import { AppLayout } from '../../Layout/AppLayout'
 
 jest.mock('./infra/usePopularRepoApi')
 jest.mock('../Favorites/infra/useFavoritesApi')
 
 const repositories = repositoryFactory.buildList(3)
 
-const setup = (props = {}) => {
-  const defaultProps = {}
-  return render(<PopularRepo {...defaultProps} {...props}></PopularRepo>, {
+const setup = () => {
+  return render(<PopularRepo></PopularRepo>, {
     wrapper: Wrapper,
   })
 }
@@ -102,5 +102,18 @@ describe('<PopularRepo/>', () => {
     userEvent.click(starButton)
 
     expect(toggleFavorites).toHaveBeenCalledWith(repository)
+  })
+
+  test('shows alert on error', async () => {
+    // @ts-ignore
+    usePopularRepoApi.mockImplementation(() => ({
+      isFetching: false,
+      error: 'some error happened',
+    }))
+
+    render(<AppLayout />, { wrapper: Wrapper })
+
+    const errorAlert = await screen.findByRole('alert')
+    expect(errorAlert).toBeInTheDocument()
   })
 })
